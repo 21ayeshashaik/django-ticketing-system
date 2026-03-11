@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Ticket | TicketFlow{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px;">
+    <h2>Create New Support Ticket</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Fill out the details below to submit a new support
+        request.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem;">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary">Submit Ticket</button>
+            <a href="{% url 'tickets' %}" class="btn" style="background: #e2e8f0; color: #475569;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
